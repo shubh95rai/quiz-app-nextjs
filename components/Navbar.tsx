@@ -8,9 +8,11 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { CgMenuGridO } from "react-icons/cg";
+import { DarkModeSwitch } from "./DarkModeSwitch";
 
 export default async function Navbar() {
   const session = await getSessionAction();
@@ -20,7 +22,7 @@ export default async function Navbar() {
       <Link href="/" className="text-xl font-bold tracking-tighter">
         Quiz App
       </Link>
-      <div className="flex items-center gap-4">
+      <div>
         {session?.user && (
           <div className="flex gap-2 items-center">
             <div className="hidden md:block">
@@ -32,20 +34,32 @@ export default async function Navbar() {
               </Link>
             </div>
 
-            <div className="md:hidden">
+            <div>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button size={"icon"} variant={"outline"}>
+                  <Button size={"icon"} variant={"ghost"}>
                     <CgMenuGridO />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <Link href="/result">
+                <DropdownMenuContent align="end">
+                  <Link href="/result" className="md:hidden">
                     <DropdownMenuItem>Result</DropdownMenuItem>
                   </Link>
-                  <Link href="/leaderboard">
+                  <Link href="/leaderboard" className="md:hidden">
                     <DropdownMenuItem>Leaderboard</DropdownMenuItem>
                   </Link>
+
+                  <DarkModeSwitch />
+
+                  <DropdownMenuSeparator />
+
+                  <form action={logoutAction}>
+                    <button type="submit" className="text-red-500 w-full">
+                      <DropdownMenuItem className="hover:!text-red-500">
+                        Logout
+                      </DropdownMenuItem>
+                    </button>
+                  </form>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
@@ -61,19 +75,11 @@ export default async function Navbar() {
           </div>
         )}
 
-        <div className="flex gap-2 items-center">
-          <ModeToggle />
-
-          {session?.user ? (
-            <form action={logoutAction}>
-              <Button variant={"outline"}>Logout</Button>
-            </form>
-          ) : (
-            <form action={loginAction}>
-              <Button>Login</Button>
-            </form>
-          )}
-        </div>
+        {!session?.user && (
+          <form action={loginAction}>
+            <Button>Login</Button>
+          </form>
+        )}
       </div>
     </div>
   );

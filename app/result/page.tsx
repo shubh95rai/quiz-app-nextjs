@@ -3,8 +3,15 @@ import PageLayout from "@/components/PageLayout";
 import StatCard from "@/components/StatCard";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export default async function StatsPage() {
+  const session = await getSessionAction();
+
+  if (!session?.user) {
+    redirect("/");
+  }
+
   const quizResult = await getQuizResult();
   // console.log(quizResult);
   return (
@@ -31,7 +38,9 @@ export default async function StatsPage() {
             </div>
             <div>
               <Link href="/quiz">
-                <Button variant={"outline"}>Take a New Quiz</Button>
+                <Button variant={"outline"} className="font-semibold shadow">
+                  Take a New Quiz
+                </Button>
               </Link>
             </div>
           </div>

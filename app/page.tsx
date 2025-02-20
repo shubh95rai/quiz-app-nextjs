@@ -1,23 +1,8 @@
-"use client";
+import { getSessionAction } from "@/actions/actions";
+import HomeButton from "@/components/HomeButton";
 
-import { Button } from "@/components/ui/button";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
-
-export default function Home() {
-  const { data } = useSession();
-
-  const router = useRouter();
-
-  function handleStartQuiz() {
-    if (data?.user) {
-      router.push("/quiz");
-    } else {
-      console.log("gg");
-      toast.error("You must be logged in to start the quiz");
-    }
-  }
+export default async function Home() {
+  const session = await getSessionAction();
 
   return (
     <div className="min-h-[calc(100vh-60px)] flex items-center justify-center px-4">
@@ -26,9 +11,7 @@ export default function Home() {
           Ready to take this Quiz?
         </h1>
         <p>Get ready to ace it.</p>
-        <form action={handleStartQuiz}>
-          <Button className="text-lg px-6 ">I'm ready!</Button>
-        </form>
+        <HomeButton session={session} />
       </div>
     </div>
   );

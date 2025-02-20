@@ -1,9 +1,16 @@
-import { getAllQuizResults } from "@/actions/actions";
+import { getAllQuizResults, getSessionAction } from "@/actions/actions";
 import PageLayout from "@/components/PageLayout";
 import { Avatar } from "@/components/ui/avatar";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 
 export default async function LeaderboardPage() {
+  const session = await getSessionAction();
+
+  if (!session?.user) {
+    redirect("/");
+  }
+
   const allQuizResults = await getAllQuizResults();
   return (
     <PageLayout>
@@ -38,7 +45,10 @@ export default async function LeaderboardPage() {
             </div>
           </div>
         ) : (
-          <div className="text-center text-lg font-semibold text-muted-foreground"> No results found</div>
+          <div className="text-center text-lg font-semibold text-muted-foreground">
+            {" "}
+            No results found
+          </div>
         )}
       </div>
     </PageLayout>

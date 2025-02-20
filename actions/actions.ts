@@ -2,6 +2,8 @@
 
 import { auth, signIn, signOut } from "@/auth";
 import { prisma } from "@/prisma/prismaClient";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function getSessionAction() {
   const session = await auth();
@@ -22,6 +24,8 @@ export async function loginAction() {
 }
 export async function logoutAction() {
   await signOut();
+  revalidatePath("/");
+  redirect("/");
 }
 
 export async function saveQuizResult(
