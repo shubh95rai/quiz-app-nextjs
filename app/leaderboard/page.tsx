@@ -14,7 +14,7 @@ export default async function LeaderboardPage() {
   const allQuizResults = await getAllQuizResults();
   return (
     <PageLayout>
-      <div className="md:max-w-xl max-w-lg w-full ">
+      <div className="md:max-w-xl max-w-lg w-full py-8">
         {allQuizResults && allQuizResults.length > 0 ? (
           <div className="text-center space-y-8">
             <h1 className="text-2xl font-bold tracking-tighter">Leaderboard</h1>

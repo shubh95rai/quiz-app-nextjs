@@ -16,7 +16,7 @@ export default async function StatsPage() {
   // console.log(quizResult);
   return (
     <PageLayout>
-      <div className="md:max-w-xl max-w-lg w-full">
+      <div className="md:max-w-xl max-w-lg w-full py-8">
         {quizResult ? (
           <div className="space-y-8 text-center">
             <h1 className="text-2xl font-bold tracking-tighter">Results</h1>

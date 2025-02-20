@@ -17,7 +17,7 @@ export default function HomeButton({ session }: { session: Session | null }) {
   }
   return (
     <form action={handleStartQuiz}>
-      <Button className="text-lg px-5">I'm ready!</Button>
+      <Button className="xs:text-lg xs:px-5">I'm ready!</Button>
     </form>
   );
 }
