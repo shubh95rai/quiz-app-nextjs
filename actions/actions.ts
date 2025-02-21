@@ -41,12 +41,12 @@ export async function saveQuizResult(
         userId: user?.id,
       },
       update: {
-        score,
+        score: score * 5,
         correctAnswers,
         incorrectAnswers,
       },
       create: {
-        score,
+        score: score * 5,
         correctAnswers,
         incorrectAnswers,
         user: {

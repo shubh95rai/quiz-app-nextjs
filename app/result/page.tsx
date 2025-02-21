@@ -23,7 +23,7 @@ export default async function ResultPage() {
             <div className="grid md:grid-cols-2 gap-4 text-center ">
               <StatCard
                 title="Percentage"
-                value={`${(quizResult.score / 10) * 100}%`}
+                value={`${(quizResult.score / 50) * 100}%`}
               />
               <StatCard title="Total Questions" value="10" />
               <StatCard title="Total Score" value={quizResult.score} />
