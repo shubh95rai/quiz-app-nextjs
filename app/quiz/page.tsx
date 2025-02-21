@@ -15,25 +15,28 @@ export default function Quiz() {
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [incorrectAnswers, setIncorrectAnswers] = useState(0);
   const [timeLeft, setTimeLeft] = useState(30);
+  const [isTimerRunning, setIsTimerRunning] = useState(true);
 
   const router = useRouter();
 
   const { question, options, answer, type } = quizData[currentQuestion];
 
   useEffect(() => {
-    // console.log("useffect");
     if (timeLeft === 0) {
       handleNext(true);
+      return;
     }
+
+    if (!isTimerRunning) {
+      return;
+    }
+
     const timer = setInterval(() => {
-      setTimeLeft((prev) => {
-        return prev - 1;
-      });
+      setTimeLeft((prev) => prev - 1);
     }, 1000);
-    return () => {
-      return clearInterval(timer);
-    };
-  }, [timeLeft]);
+
+    return () => clearInterval(timer);
+  }, [timeLeft, isTimerRunning]);
 
   async function handleNext(timeout = false) {
     const rightAnswer = answer;
@@ -42,7 +45,7 @@ export default function Quiz() {
     const isAnswerCorrect =
       type === "multiple-choice"
         ? selectedAnswer === rightAnswer
-        : userAnswer === rightAnswer.toLocaleLowerCase();
+        : userAnswer === rightAnswer.toLowerCase();
 
     if (!timeout) {
       if (isAnswerCorrect) {
@@ -59,8 +62,14 @@ export default function Quiz() {
       setCurrentQuestion(currentQuestion + 1);
       setSelectedAnswer("");
       setTimeLeft(30);
+      setIsTimerRunning(true);
     } else {
-      await saveQuizResult(score, correctAnswers, incorrectAnswers);
+      await saveQuizResult(
+        score + (isAnswerCorrect ? 1 : 0),
+        correctAnswers + (isAnswerCorrect ? 1 : 0),
+        incorrectAnswers + (timeout || !isAnswerCorrect ? 1 : 0)
+      );
+
       toast.success("Quiz completed successfully!");
       router.push("/result");
     }
@@ -73,6 +82,7 @@ export default function Quiz() {
     }
 
     toast.dismiss();
+    setIsTimerRunning(false);
     handleNext(false);
   }
 
