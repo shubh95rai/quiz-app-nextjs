@@ -16,9 +16,13 @@ export default async function LeaderboardPage() {
     <PageLayout>
       <div className="md:max-w-xl max-w-lg w-full py-8">
         {allQuizResults && allQuizResults.length > 0 ? (
-          <div className="text-center space-y-8">
+
+
+          <div className="text-center space-y-4">
+
             <h1 className="text-2xl font-bold tracking-tighter">Leaderboard</h1>
-            <div className="border rounded-lg p-4 shadow">
+
+            <div className="border rounded-lg p-4 shadow space-y-4">
               {allQuizResults.map((result, index) => {
                 return (
                   <div
@@ -34,7 +38,9 @@ export default async function LeaderboardPage() {
                           height={40}
                         />
                       </Avatar>
-                      <p className="font-semibold">{result.user.name}</p>
+                      <p className="font-semibold">
+                        {result.user.newName || result.user.name}
+                      </p>
                     </div>
                     <div className=" bg-muted-foreground text-background py-2 px-4 rounded-lg font-semibold">
                       {result.score} points

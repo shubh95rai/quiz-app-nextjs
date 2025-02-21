@@ -1,15 +1,8 @@
 "use client";
 
-// import { cn } from "@/lib/utils";
-// import { Loader2 } from "lucide-react";
-
-function Loader({ className }) {
+function Loader() {
   return (
     <div className="flex min-h-[calc(100vh-60px)] items-center justify-center">
-      {/* <Loader2
-        className={cn("my-28 h-12 w-12 animate-spin text-primary", className)}
-      /> */}
-
       <svg
         className="h-10 w-10 animate-spin text-primary"
         xmlns="http://www.w3.org/2000/svg"

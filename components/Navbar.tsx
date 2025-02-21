@@ -49,6 +49,10 @@ export default async function Navbar() {
                     <DropdownMenuItem>Leaderboard</DropdownMenuItem>
                   </Link>
 
+                  <Link href="/settings">
+                    <DropdownMenuItem>Settings</DropdownMenuItem>
+                  </Link>
+
                   <DarkModeSwitch />
 
                   <DropdownMenuSeparator />

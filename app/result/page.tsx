@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-export default async function StatsPage() {
+export default async function ResultPage() {
   const session = await getSessionAction();
 
   if (!session?.user) {
@@ -18,7 +18,7 @@ export default async function StatsPage() {
     <PageLayout>
       <div className="md:max-w-xl max-w-lg w-full py-8">
         {quizResult ? (
-          <div className="space-y-8 text-center">
+          <div className="space-y-4 text-center">
             <h1 className="text-2xl font-bold tracking-tighter">Results</h1>
             <div className="grid md:grid-cols-2 gap-4 text-center ">
               <StatCard

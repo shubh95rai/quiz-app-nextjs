@@ -1,6 +1,7 @@
 "use server";
 
 import { auth, signIn, signOut } from "@/auth";
+import { TFormSchema } from "@/components/SettingsForm";
 import { prisma } from "@/prisma/prismaClient";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -64,7 +65,7 @@ export async function getQuizResult() {
   const user = await getSessionUserAction();
 
   try {
-    const result = await prisma.quizResult.findUnique({
+    const result = await prisma.quizResult.findFirst({
       where: {
         userId: user?.id,
       },
@@ -92,5 +93,30 @@ export async function getAllQuizResults() {
     return quizResults;
   } catch (error) {
     console.error("Error getting quiz results:", error);
+  }
+}
+
+export async function chnageNameAction(data: TFormSchema) {
+  const sessionUser = await getSessionUserAction();
+
+  try {
+    await prisma.user.update({
+      where: {
+        id: sessionUser?.id,
+      },
+      data: {
+        newName: data.newName,
+      },
+    });
+    return {
+      success: true,
+      message: "Your name has been updated successfully",
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      success: false,
+      message: "Something went wrong. Please try again later",
+    };
   }
 }
